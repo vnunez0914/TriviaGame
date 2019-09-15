@@ -5,7 +5,7 @@
 var timer = 15; //count down timer to go onto the next question 
 var score = 0;
 var currentQuestion = 0;//shows current questions
-var intervalTimer;
+var intervalId;
 var triviaQuestions = [
     {
         question: "In what year did Spider-Man make his comic debut?",
@@ -38,25 +38,43 @@ var triviaQuestions = [
 ];
 console.log(triviaQuestions)
 
-//for(var i = 0; i < triviaQuestions.length; i++){
-    //.log(triviaQuestions[i])
-//}
+//start timer/quiz
 
-function displayQuestion(){
+
+$(".start").on("click", run);
+function run() {
+    clearInterval(intervalId);
+    intervalId = setInterval(decrement, 1000);
+
+}
+//timer countdown and display question
+function decrement() {
+    timer--;
+
+    displayQuestion()
+    if (timer === 0) {
+        stop();
+
+    }
+}
+
+function stop() {
+    clearInterval(intervalId);
+}
+
+
+
+function displayQuestion() {
     var question = triviaQuestions[currentQuestion].question;//displays first question
-    var choices = triviaQuestions[currentQuestion].choices;//displays choices
-    $("#timer").html("<h4>"+ " Timer: " + timer + "</h4") //displays "Timer" and the var timer on page
-    $("#questions").html("<h4>" + question + "</h4>");
-    
+    var options = triviaQuestions[currentQuestion].choices;//displays choices
+    //displays "Timer" and the var timer on page
+    $("#timer").html("<h4>" + " Time: " + timer + "</h4")
+    $("#quiz").html("<h4>" + question + "</h4>");
 };
 
-function displayChoices(choices){
-    var result ='';
-    for(var i = 0; i < choices.length; i++){
-        result+= $("#game").html("<p class=choice data-answer=" + choices + '>' + choices + "</p>");
+function displayChoices() {//display choices
+
+    for (var i = 0; i <options.length; i++) {
+
     }
-
-    return result;
-}
- displayQuestion();//calls the function
-
+};
